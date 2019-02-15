@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import FilterSelect from './FilterSelect.jsx';
 
 function onFileChange(image) {
     return event => {
@@ -26,7 +27,7 @@ export default class Form extends Component {
     }
 
     shouldComponentUpdate() {
-        return false; //
+        //return false; //
     }
 
     render(props, state) {
@@ -37,18 +38,13 @@ export default class Form extends Component {
         return (
             <form onSubmit={event => event.preventDefault()}>
                 <input type="file" onChange={onFileChange(state.image)} />
-                <select
-                    value={props.selectedFilter}
-                    onChange={event => props.onFilterChange(event.target.value)}
-                >
-                    {Object.keys(props.filters).map(filter => {
-                        return (
-                            <option value={filter} key={filter}>
-                                {props.filters[filter].label}
-                            </option>
-                        );
-                    })}
-                </select>
+                <FilterSelect
+                    filters={props.filters}
+                    selectedFilter={props.selectedFilter}
+                    onFilterChange={props.onFilterChange}
+                />
+                <input type="color" />
+                <input type="range" min="0" max="765" />
             </form>
         );
     }

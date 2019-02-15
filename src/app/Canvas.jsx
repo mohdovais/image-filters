@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
 import CanvasDom from './CanvasDom.jsx';
+import load_wasm from '../wasm/wasm.js';
+//import load_wasm from '../../wasm-image-filters/pkg/wasm_image_filters';
 
 function createWebWorker(config) {
     if (window.Worker) {
@@ -14,6 +16,13 @@ function setContext(component) {
     return canvas => {
         component.canvas = canvas;
     };
+}
+
+let WASM;
+function get_wasm() {
+    return WASM === undefined
+        ? load_wasm().then(exports => (WASM = exports))
+        : Promise.resolve(WASM);
 }
 
 function getImageData(image) {
@@ -60,12 +69,52 @@ export default class Canvas extends Component {
 
     postMessage(filter) {
         const image = this.props.image;
-        if (image !== null) {
+        if (image !== null && filter !== 'wasm') {
             this.worker.postMessage([
                 filter,
                 getImageData(image),
                 (this.timestamp = performance.now()),
             ]);
+        }
+
+        if (image !== null && filter === 'wasm') {
+            console.time('wasm');
+            get_wasm().then(exports => {
+                console.time('getContext');
+                const ctx = this.canvas.getContext('2d');
+                console.timeEnd('getContext');
+                console.time('getImageData');
+                const imageData = getImageData(image);
+                console.timeEnd('getImageData');
+                console.time('exports.RGB.new');
+                const color = exports.RGB.new(255, 255, 0);
+                console.timeEnd('exports.RGB.new');
+                console.time('exports.CanvasImageData.new');
+                const wasmImageData = exports.CanvasImageData.new(
+                    imageData.width,
+                    imageData.height,
+                    imageData.data
+                );
+                console.timeEnd('exports.CanvasImageData.new');
+                console.time('filter_custom_color');
+                wasmImageData.filter_custom_color(color, 90);
+                console.timeEnd('filter_custom_color');
+                console.time('imageData.data.set');
+                imageData.data.set(
+                    new Uint8ClampedArray(
+                        new Float32Array(
+                            exports.wasm.memory.buffer,
+                            wasmImageData.data(),
+                            wasmImageData.width() * wasmImageData.height() * 4
+                        )
+                    )
+                );
+                console.timeEnd('imageData.data.set');
+                console.time('putImageData');
+                ctx.putImageData(imageData, 0, 0);
+                console.timeEnd('putImageData');
+                console.timeEnd('wasm');
+            });
         }
     }
 
@@ -82,6 +131,8 @@ export default class Canvas extends Component {
             }
 
             canvas.getContext('2d').putImageData(imageData, 0, 0);
+
+            console.log("complete", performance.now() - this.timestamp)
         }
     }
 }

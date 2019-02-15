@@ -15,13 +15,14 @@ export default [
         output: {
             file: 'dist/app.js',
             format: 'iife',
+            name: 'app',
             sourcemap: true,
         },
         plugins: [
             resolve({
                 browser: true,
                 extensions: ['.mjs', '.js', '.jsx', '.json'],
-            }), // tells Rollup how to find date-fns in node_modules
+            }),
             replace({
                 'process.env.NODE_ENV': JSON.stringify(environment),
             }),
@@ -30,7 +31,7 @@ export default [
                 objectAssign: 'Object.assign', //'Object.assign'
             }),
             commonjs(), // converts date-fns to ES modules
-            production && terser(), // minify, but only in production
+            //production && terser(), // minify, but only in production
         ],
     },
     {

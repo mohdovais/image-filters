@@ -132,3 +132,30 @@ export function customColor(rgb, threshold) {
         return data;
     };
 }
+
+export function distance(data, rgb, threshold) {
+    let r, g, b, i, l, dR2, dG2, dB2;
+    let D = [];
+    for (i = 0, l = data.length; i < l; i += 4) {
+        r = data[i];
+        g = data[i + 1];
+        b = data[i + 2];
+
+        dR2 = Math.pow(rgb[0] - r, 2);
+        dG2 = Math.pow(rgb[1] - g, 2);
+        dB2 = Math.pow(rgb[2] - b, 2);
+
+        let d = Math.sqrt(
+            2 * dR2 + 4 * dG2 + 3 * dB2 + ((rgb[0] + r) * (dR2 - dB2)) / 512
+        );
+
+        //console.log(d)
+        D.push(d);
+
+        if (d > threshold) {
+            data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
+        }
+    }
+
+    return data;
+}

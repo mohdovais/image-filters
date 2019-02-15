@@ -8,6 +8,7 @@ import {
     blue,
     blue2,
     customColor,
+    distance,
 } from './filter-functions.js';
 
 onmessage = function(event) {
@@ -39,8 +40,11 @@ onmessage = function(event) {
         case 'blue2':
             blue2(data);
             break;
+        case 'distance':
+            distance(data, [0, 255, 0], 382.5);
+            break;
         case 'customColor':
-            customColor([255, 255, 0], 100)(data);
+            customColor([255, 255, 0], 50)(data);
     }
     console.timeEnd('filter');
 

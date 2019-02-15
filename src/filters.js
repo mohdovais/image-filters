@@ -43,8 +43,16 @@ export default {
         label: 'Other Blue',
         fn: 'blue2',
     },
+    distance: {
+        label: '3D distance',
+        fn: 'distance'
+    },
     customColor: {
         label: 'Custom Colour',
         fn: 'customColor'
+    },
+    wasm: {
+        label: 'WebAssembly',
+        fn: 'wasm'
     }
 };
