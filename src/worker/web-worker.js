@@ -7,14 +7,19 @@ import {
     green2,
     blue,
     blue2,
-    customColor,
+    distance3d,
 } from './filter-functions.js';
+import { hex2rgb } from './../util/hex2rgb.js';
 
 onmessage = function(event) {
     console.time('filter');
-    let data = event.data[1].data;
+    const eventData = event.data;
+    const data = eventData[0].data;
+    const filter = eventData[1];
+    const color = eventData[2];
+    const threshold = eventData[3];
 
-    switch (event.data[0]) {
+    switch (filter) {
         case 'invert':
             invert(data);
             break;
@@ -39,8 +44,8 @@ onmessage = function(event) {
         case 'blue2':
             blue2(data);
             break;
-        case 'customColor':
-            customColor([255, 255, 0], 100)(data);
+        case 'distance3d':
+            distance3d(data, hex2rgb(color), threshold);
     }
     console.timeEnd('filter');
 

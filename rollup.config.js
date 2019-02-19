@@ -34,7 +34,7 @@ export default [
         ],
     },
     {
-        input: 'src/web-worker.js',
+        input: 'src/worker/web-worker.js',
         output: {
             file: 'dist/web-worker.js',
             format: 'cjs',

@@ -1,55 +1,37 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import SelectFilters from './form/SelectFilters.jsx';
+import InputCustomColor from './form/InputCustomColor.jsx';
+import InputThreshold from './form/InputThreshold.jsx';
+import InputFile from './form/InputFile.jsx';
+import { pure } from '../util/pure-component.js';
 
-function onFileChange(image) {
-    return event => {
-        const file = event.target.files[0];
-        if (file) {
-            image.src = URL.createObjectURL(file);
-        }
-    };
+function getCustomColor(show, color, onColorChange) {
+    return show === true ? (
+        <InputCustomColor value={color} onChange={onColorChange} />
+    ) : null;
 }
 
-function onImageLoad(callback) {
-    return event => {
-        const img = event.target;
-        callback(img);
-        URL.revokeObjectURL(img.src);
-    };
-}
-
-export default class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            image: new Image(),
-        };
-    }
-
-    shouldComponentUpdate() {
-        return false; //
-    }
-
-    render(props, state) {
-        console.log('render form');
-
-        state.image.onload = onImageLoad(props.onImageChange);
-
-        return (
-            <form onSubmit={event => event.preventDefault()}>
-                <input type="file" onChange={onFileChange(state.image)} />
-                <select
-                    value={props.selectedFilter}
-                    onChange={event => props.onFilterChange(event.target.value)}
-                >
-                    {Object.keys(props.filters).map(filter => {
-                        return (
-                            <option value={filter} key={filter}>
-                                {props.filters[filter].label}
-                            </option>
-                        );
-                    })}
-                </select>
-            </form>
-        );
-    }
-}
+export default pure(function Form(props) {
+    return (
+        <form
+            onSubmit={event => event.preventDefault()}
+            style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+            }}
+        >
+            <InputFile onChange={props.onImageChange} />
+            <SelectFilters
+                value={props.filter}
+                onChange={props.onFilterChange}
+            />
+            {getCustomColor(props.showColor, props.color, props.onColorChange)}
+            <InputThreshold
+                min={props.thresholdMin}
+                max={props.thresholdMax}
+                value={props.threshold}
+                onChange={props.onThresholdChange}
+            />
+        </form>
+    );
+});

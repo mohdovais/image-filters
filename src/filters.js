@@ -1,15 +1,3 @@
-import {
-    invert,
-    grayscale,
-    red,
-    red2,
-    green,
-    green2,
-    blue,
-    blue2,
-    customColor
-} from './filter-functions.js';
-
 export default {
     invert: {
         label: 'Invert',
@@ -43,8 +31,8 @@ export default {
         label: 'Other Blue',
         fn: 'blue2',
     },
-    customColor: {
+    distance3d: {
         label: 'Custom Colour',
-        fn: 'customColor'
-    }
+        fn: 'distance3d',
+    },
 };

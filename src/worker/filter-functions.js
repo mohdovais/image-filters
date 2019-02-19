@@ -1,6 +1,5 @@
-import { CIE76Lab, RGB2LAB } from './util/lab.js';
+import { CIE76Lab, RGB2LAB } from '../util/lab.js';
 
-const threshold = 50;
 const THRESHOLD = 8;
 
 export function invert(data) {
@@ -131,4 +130,30 @@ export function customColor(rgb, threshold) {
 
         return data;
     };
+}
+
+export function distance3d(data, rgb, threshold) {
+    let r, g, b, i, l, ΔR_square, ΔG_square, ΔB_square;
+    for (i = 0, l = data.length; i < l; i += 4) {
+        r = data[i];
+        g = data[i + 1];
+        b = data[i + 2];
+
+        ΔR_square = Math.pow(rgb[0] - r, 2);
+        ΔG_square = Math.pow(rgb[1] - g, 2);
+        ΔB_square = Math.pow(rgb[2] - b, 2);
+
+        let d = Math.sqrt(
+            2 * ΔR_square +
+                4 * ΔG_square +
+                3 * ΔB_square +
+                ((rgb[0] + r) * (ΔR_square - ΔB_square)) / 512
+        );
+
+        if (d > threshold) {
+            data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
+        }
+    }
+
+    return data;
 }
