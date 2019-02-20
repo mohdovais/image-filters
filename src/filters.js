@@ -1,4 +1,8 @@
 export default {
+    original: {
+        label: 'Original',
+        fn: 'original',
+    },
     invert: {
         label: 'Invert',
         fn: 'invert',
@@ -8,7 +12,7 @@ export default {
         fn: 'grayscale',
     },
     red: {
-        label: 'Red',
+        label: 'Red Tone',
         fn: 'red',
     },
     red2: {
@@ -16,7 +20,7 @@ export default {
         fn: 'red2',
     },
     green: {
-        label: 'Green',
+        label: 'Green Tone',
         fn: 'green',
     },
     green2: {
@@ -24,7 +28,7 @@ export default {
         fn: 'green2',
     },
     blue: {
-        label: 'Blue',
+        label: 'Blue Tone',
         fn: 'blue',
     },
     blue2: {

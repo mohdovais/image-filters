@@ -1,4 +1,4 @@
-import { CIE76Lab, RGB2LAB } from '../util/lab.js';
+import { CIE76Lab, RGB2LAB } from './lab.js';
 
 const THRESHOLD = 8;
 
@@ -38,16 +38,15 @@ export function red(data) {
 }
 
 export function red2(data) {
-    let r, g, b, avg, i, l;
+    let r, g, b, i, l;
 
     for (i = 0, l = data.length; i < l; i += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
-        avg = (r + g + b) / 3;
 
-        if (r < g + THRESHOLD || r < b + THRESHOLD) {
-            data[i] = data[i + 1] = data[i + 2] = avg;
+        if (r < g - THRESHOLD || r < b - THRESHOLD) {
+            data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }
 
@@ -67,15 +66,14 @@ export function green(data) {
 }
 
 export function green2(data) {
-    var r, g, b, avg, i, l;
+    var r, g, b, i, l;
 
     for (i = 0, l = data.length; i < l; i += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
-        avg = (r + g + b) / 3;
-        if (g < r + THRESHOLD || g < b + THRESHOLD) {
-            data[i] = data[i + 1] = data[i + 2] = avg;
+        if (g < r - THRESHOLD || g < b - THRESHOLD) {
+            data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }
 
@@ -96,16 +94,15 @@ export function blue(data) {
 }
 
 export function blue2(data) {
-    let r, g, b, avg, i, l;
+    let r, g, b, i, l;
 
     for (i = 0, l = data.length; i < l; i += 4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
-        avg = (r + g + b) / 3;
 
-        if (b < r + THRESHOLD || b < g + THRESHOLD) {
-            data[i] = data[i + 1] = data[i + 2] = avg;
+        if (b < r - THRESHOLD || b < g - THRESHOLD) {
+            data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }
 

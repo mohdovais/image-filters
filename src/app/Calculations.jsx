@@ -21,13 +21,7 @@ export default class Calculations extends Component {
         });
     }
 
-    render(props) {
-        this.postMessage(
-            props.image,
-            props.filter,
-            props.color,
-            props.threshold
-        );
+    render() {
         return null;
     }
 
@@ -37,6 +31,16 @@ export default class Calculations extends Component {
 
     shouldComponentUpdate(props) {
         return shallowDiffers(this.props, props);
+    }
+
+    componentDidUpdate() {
+        const props = this.props;
+        this.postMessage(
+            props.image,
+            props.filter,
+            props.color,
+            props.threshold
+        );
     }
 
     postMessage(image, filter, color, threshold) {

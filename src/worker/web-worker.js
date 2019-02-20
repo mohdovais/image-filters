@@ -8,7 +8,7 @@ import {
     blue,
     blue2,
     distance3d,
-} from './filter-functions.js';
+} from '../util/filter-functions.js';
 import { hex2rgb } from './../util/hex2rgb.js';
 
 onmessage = function(event) {

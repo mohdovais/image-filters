@@ -1,7 +1,8 @@
 import { h, Component } from 'preact';
-import { pure } from '../util/pure-component.js';
+import { pure, shallowDiffers } from '../util/pure-component.js';
 
 const Dom = pure(function CanvasDom(props) {
+    console.log('canvas dom')
     return (
         <canvas
             ref={props.getRef}
@@ -32,6 +33,10 @@ export default class Canvas extends Component {
     constructor(props) {
         super(props);
         this.getRef = canvas => (this.canvas = canvas);
+    }
+
+    shouldComponentUpdate(props) {
+        return shallowDiffers(this.props, props);
     }
 
     render() {

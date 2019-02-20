@@ -32,7 +32,7 @@ export default class Application extends Component {
 
         me.state = {
             image: null,
-            filter: null,
+            filter: 'original',
             filteredImage: null,
             color: '#ffff00',
             showColor: false,
