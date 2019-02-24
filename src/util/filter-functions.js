@@ -1,6 +1,5 @@
 import { CIE76Lab, RGB2LAB } from './lab.js';
-
-const THRESHOLD = 8;
+import { calculateHue } from './rgb2hsl';
 
 export function invert(data) {
     let i = 0;
@@ -15,10 +14,9 @@ export function invert(data) {
 
 export function grayscale(data) {
     const length = data.length;
-    let i, avg;
 
-    for (i = 0; i < length; i += 4) {
-        avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    for (let i = 0; i < length; i += 4) {
+        let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
         data[i] = data[i + 1] = data[i + 2] = avg;
     }
 
@@ -37,15 +35,16 @@ export function red(data) {
     return data;
 }
 
-export function red2(data) {
-    let r, g, b, i, l;
+export function red2(data, threshold) {
+    const l = data.length;
+    threshold = threshold | 0;
 
-    for (i = 0, l = data.length; i < l; i += 4) {
-        r = data[i];
-        g = data[i + 1];
-        b = data[i + 2];
+    for (let i = 0; i < l; i += 4) {
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
 
-        if (r < g - THRESHOLD || r < b - THRESHOLD) {
+        if (r <= g + threshold || r <= b + threshold) {
             data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }
@@ -65,14 +64,16 @@ export function green(data) {
     return data;
 }
 
-export function green2(data) {
-    var r, g, b, i, l;
+export function green2(data, threshold) {
+    const l = data.length;
+    threshold = threshold | 0;
 
-    for (i = 0, l = data.length; i < l; i += 4) {
-        r = data[i];
-        g = data[i + 1];
-        b = data[i + 2];
-        if (g < r - THRESHOLD || g < b - THRESHOLD) {
+    for (let i = 0; i < l; i += 4) {
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
+
+        if (g <= r + threshold || g <= b + threshold) {
             data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }
@@ -93,15 +94,16 @@ export function blue(data) {
     return data;
 }
 
-export function blue2(data) {
-    let r, g, b, i, l;
+export function blue2(data, threshold) {
+    const l = data.length;
+    threshold = threshold | 0;
 
-    for (i = 0, l = data.length; i < l; i += 4) {
-        r = data[i];
-        g = data[i + 1];
-        b = data[i + 2];
+    for (let i = 0; i < l; i += 4) {
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
 
-        if (b < r - THRESHOLD || b < g - THRESHOLD) {
+        if (b <= r + threshold || b <= g + threshold) {
             data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }
@@ -148,6 +150,35 @@ export function distance3d(data, rgb, threshold) {
         );
 
         if (d > threshold) {
+            data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
+        }
+    }
+
+    return data;
+}
+
+export function contrast(data, threshold) {
+    const constant = (threshold | 0) / 256;
+    for (let i = 0, l = data.length; i < l; i += 4) {
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
+        let factor = 1 + ((r + g + b) / 3 < 128 ? -1 : 1) * constant;
+        data[i] = r * factor;
+        data[i + 1] = g * factor;
+        data[i + 2] = b * factor;
+    }
+
+    return data;
+}
+
+export function hue(data, rgb, threshold) {
+    const hue = calculateHue(rgb[0], rgb[1], rgb[2]);
+    for (let i = 0, l = data.length; i < l; i += 4) {
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
+        if (Math.abs(calculateHue(r, g, b) - hue) > threshold) {
             data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }

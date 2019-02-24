@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { pure } from '../../util/pure-component.js';
 
-export default pure(function InputThreshold(props) {
+function thresholdRange(props) {
     return (
         <label>
             Threshold:
@@ -16,4 +16,8 @@ export default pure(function InputThreshold(props) {
             {props.value}
         </label>
     );
+}
+
+export default pure(function InputThreshold(props) {
+    return props.min === props.max ? null : thresholdRange(props);
 });

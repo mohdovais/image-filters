@@ -39,4 +39,12 @@ export default {
         label: 'Custom Colour',
         fn: 'distance3d',
     },
+    contrast: {
+        label: 'Contrast',
+        fn: 'contrast',
+    },
+    hue: {
+        label: 'Hue',
+        fn: 'hue',
+    },
 };
