@@ -173,12 +173,21 @@ export function contrast(data, threshold) {
 }
 
 export function hue(data, rgb, threshold) {
-    const hue = calculateHue(rgb[0], rgb[1], rgb[2]);
+    const targetHue = calculateHue(rgb[0], rgb[1], rgb[2]);
+    const lowerLimit = (targetHue - threshold + 360) % 360;
+    const upperLimit = (targetHue + threshold + 360) % 360;
+    const reverse = lowerLimit > upperLimit;
+
     for (let i = 0, l = data.length; i < l; i += 4) {
         let r = data[i];
         let g = data[i + 1];
         let b = data[i + 2];
-        if (Math.abs(calculateHue(r, g, b) - hue) > threshold) {
+        const hue = calculateHue(r, g, b);
+        const outsideThreshold = reverse
+            ? hue <= lowerLimit && hue >= upperLimit
+            : hue < lowerLimit || hue > upperLimit;
+
+        if (outsideThreshold) {
             data[i] = data[i + 1] = data[i + 2] = (r + g + b) / 3;
         }
     }

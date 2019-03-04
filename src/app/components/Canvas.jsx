@@ -1,18 +1,5 @@
 import { h, Component } from 'preact';
-import { pure, shallowDiffers } from '../util/pure-component.js';
-
-const Dom = pure(function CanvasDom(props) {
-    console.log('canvas dom')
-    return (
-        <canvas
-            ref={props.getRef}
-            style={{
-                maxWidth: '100%',
-                height: 'auto',
-            }}
-        />
-    );
-});
+import { pure, shallowDiffers } from '../../util/pure-component.js';
 
 function putImageData(canvas, imageData) {
     const context = canvas.getContext('2d');
@@ -29,10 +16,22 @@ function putImageData(canvas, imageData) {
     }
 }
 
+const Dom = pure(function CanvasDom(props) {
+    return (
+        <canvas
+            ref={props.getRef}
+            style={{
+                maxWidth: '100%',
+                height: 'auto',
+            }}
+        />
+    );
+});
+
 export default class Canvas extends Component {
     constructor(props) {
         super(props);
-        this.getRef = canvas => (this.canvas = canvas);
+        this.getRef = dom => (this.el = dom);
     }
 
     shouldComponentUpdate(props) {
@@ -43,7 +42,11 @@ export default class Canvas extends Component {
         return <Dom getRef={this.getRef} />;
     }
 
+    componentDidMount() {
+        putImageData(this.el, this.props.image);
+    }
+
     componentDidUpdate() {
-        putImageData(this.canvas, this.props.image);
+        putImageData(this.el, this.props.image);
     }
 }

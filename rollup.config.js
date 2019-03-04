@@ -3,6 +3,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import buble from 'rollup-plugin-buble';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
+import postcss from 'rollup-plugin-postcss';
+import autoprefixer from 'autoprefixer';
 
 // `npm run build` -> `production` is true
 // `npm run dev` -> `production` is false
@@ -11,13 +13,17 @@ const environment = production ? 'production' : 'development';
 
 export default [
     {
-        input: 'src/main.js',
+        input: 'src/app/main.js',
         output: {
             file: 'dist/app.js',
             format: 'iife',
             sourcemap: true,
         },
         plugins: [
+            postcss({
+                extract: true,
+                plugins: [autoprefixer()],
+            }),
             resolve({
                 browser: true,
                 extensions: ['.mjs', '.js', '.jsx', '.json'],
@@ -34,7 +40,7 @@ export default [
         ],
     },
     {
-        input: 'src/worker/web-worker.js',
+        input: 'src/web-worker/main.js',
         output: {
             file: 'dist/web-worker.js',
             format: 'cjs',

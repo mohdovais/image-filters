@@ -1,0 +1,18 @@
+
+.drop-target{
+    background: #fefefe;
+    border: 1px solid #efefef;
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.drop-target.highlight{
+    background: yellow;
+    border: 1px dashed red;
+}
+
+
+.drop-target label{
+    color: blue;
+    cursor: pointer;
+}
