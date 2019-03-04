@@ -17,6 +17,7 @@ export default function imageReducer(state, img) {
     return Object.assign({}, state, {
         image,
         thumbnail,
+        filter: 'ORIGINAL',
         filters: state.filters.map(filter =>
             Object.assign({}, filter, {
                 thumbnail,

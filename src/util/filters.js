@@ -35,12 +35,4 @@ export default [
         label: 'Blue',
         fn: 'BLUE',
     },
-    {
-        label: 'Contrast',
-        fn: 'CONTRAST',
-    },
-    {
-        label: 'Hue',
-        fn: 'HUE',
-    },
 ];
