@@ -1,7 +1,7 @@
 import { h } from 'preact';
-import { pure } from '../util/pure-component.js';
-import { hsl2rgb } from './../util/hsl2rgb.js';
-import { rgb2hex } from './../util/rgb2hex.js';
+import { pure } from '../../util/pure-component.js';
+import { hsl2rgb } from '../../util/hsl2rgb.js';
+import { rgb2hex } from '../../util/rgb2hex.js';
 
 export default pure(function ColorGrid(props) {
     const count = props.count || 36;

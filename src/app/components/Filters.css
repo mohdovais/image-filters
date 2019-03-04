@@ -1,0 +1,24 @@
+.filters{
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.filters button{
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    margin: 0 2px;
+}
+
+.filters button:not(.selected){
+    opacity: 0.7;
+    color: #999;
+}
+
+.filters button span{
+    display: block;
+    text-align: center;
+}
