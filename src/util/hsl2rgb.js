@@ -1,8 +1,10 @@
 // https://www.rapidtables.com/convert/color/hsl-to-rgb.html
 
 export function hsl2rgb(h, s, l) {
-    const C = (1 - Math.abs(2 * l - 1)) * s;
-    const X = C * (1 - Math.abs(((h / 60) % 2) - 1));
+    const twoL = 2 * l;
+    const C = (1 - (twoL > 1 ? twoL - 1 : 1 - twoL)) * s;
+    const modH = (h / 60) % 2;
+    const X = C * (1 - (modH > 1 ? modH - 1 : 1 - modH));
     const m = l - C / 2;
     let r, g, b;
 
@@ -34,5 +36,5 @@ export function hsl2rgb(h, s, l) {
         r = g = b = 0;
     }
 
-    return new Uint8Array([(r + m) * 255, (g + m) * 255, (b + m) * 255]);
+    return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
 }

@@ -6,6 +6,9 @@ import {
     blue,
     hue,
 } from '../util/filter-functions.js';
+import saturation from './../filters/saturation';
+import lightness from './../filters/lightness';
+import changeHue from './../filters/hue';
 
 onmessage = function(event) {
     console.time('filter');
@@ -38,6 +41,15 @@ onmessage = function(event) {
             break;
         case 'BLUE':
             hue(data, [0, 0, 255], 60);
+            break;
+        case 'HUE':
+            changeHue(data, -30);
+            break;
+        case 'SATURATION':
+            saturation(data, 0.2);
+            break;
+        case 'LIGHTNESS':
+            lightness(data, 0.2);
             break;
     }
 

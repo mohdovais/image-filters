@@ -38,7 +38,25 @@ export function rgb2hsl(r, g, b) {
         max === 0 || min === 1
             ? 0
             : (max - lightness) / Math.min(lightness, 1 - lightness);
-    const hue = calculateHue(r, g, b);
+    let hue;
+
+    if (min == max) {
+        hue = 0;
+    } else {
+        const range = max - min;
+        switch (max) {
+            case R:
+                hue = (G < B ? 6 : 0) + (G - B) / range;
+                break;
+            case G:
+                hue = 2 + (B - R) / range;
+                break;
+            case B:
+                hue = 4 + (R - G) / range;
+                break;
+        }
+        hue = 60 * (hue < 0 ? 360 + hue : hue);
+    }
 
     return [hue, saturation, lightness];
 }

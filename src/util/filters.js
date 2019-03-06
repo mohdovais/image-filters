@@ -35,4 +35,16 @@ export default [
         label: 'Blue',
         fn: 'BLUE',
     },
+    {
+        label: 'Hue',
+        fn: 'HUE',
+    },
+    {
+        label: 'Saturation',
+        fn: 'SATURATION',
+    },
+    {
+        label: 'Lightness',
+        fn: 'LIGHTNESS',
+    },
 ];
