@@ -33,18 +33,17 @@ export default store => next => action => {
             });
             break;
         case FILTER_CHANGE:
-            state.filter !== data &&
-                setTimeout(function() {
-                    requestImageFilter({
-                        filter: data,
-                        image: state.image,
-                    }).then(data =>
-                        next({
-                            type: IMAGE_FILTER_DONE,
-                            data,
-                        })
-                    );
-                });
+            setTimeout(function() {
+                requestImageFilter({
+                    filter: data,
+                    image: state.image,
+                }).then(data =>
+                    next({
+                        type: IMAGE_FILTER_DONE,
+                        data,
+                    })
+                );
+            });
     }
 
     next(action);

@@ -15,6 +15,7 @@ const defaultState = {
     filteredImage: null,
     thumbnail: null,
     filter: 'ORIGINAL',
+    applyingFilter: false,
     filters,
 };
 
@@ -25,12 +26,14 @@ const app = function(state = defaultState, action) {
         case FILTER_CHANGE:
             return Object.assign({}, state, {
                 filter: data,
+                applyingFilter: true,
             });
         case IMAGE_CHANGE:
             return imageChangeReducer(state, data);
         case IMAGE_FILTER_DONE:
             return Object.assign({}, state, {
                 filteredImage: data,
+                applyingFilter: false,
             });
         case THUMBNAIL_FILTER_DONE:
             return Object.assign({}, state, {

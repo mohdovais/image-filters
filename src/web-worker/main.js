@@ -28,13 +28,13 @@ onmessage = function(event) {
             red(data);
             break;
         case 'RED':
-            hue(data, [255, 0, 0], 60);
+            hue(data, [255, 0, 0], 45);
             break;
         case 'GREEN_TONE':
             green(data);
             break;
         case 'GREEN':
-            hue(data, [0, 255, 0], 60);
+            hue(data, [0, 255, 0], 75);
             break;
         case 'BLUE_TONE':
             blue(data);

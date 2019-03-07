@@ -33,7 +33,6 @@ export default [
             }),
             buble({
                 jsx: 'h',
-                objectAssign: 'Object.assign', //'Object.assign'
             }),
             commonjs(), // converts date-fns to ES modules
             production && terser(), // minify, but only in production
@@ -45,11 +44,6 @@ export default [
             file: 'dist/web-worker.js',
             format: 'cjs',
         },
-        plugins: [
-            buble({
-                objectAssign: 'Object.assign', //'Object.assign'
-            }),
-            production && terser(),
-        ],
+        plugins: [buble(), production && terser()],
     },
 ];

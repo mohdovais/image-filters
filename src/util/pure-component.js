@@ -1,8 +1,9 @@
 import { Component } from 'preact';
 
 export function pure(target) {
-    if (target.prototype && target.prototype.render) {
-        target.prototype.shouldComponentUpdate = shouldComponentUpdate;
+    const proto = target.prototype;
+    if (proto && proto.render) {
+        proto.shouldComponentUpdate = shouldComponentUpdate;
     } else {
         return target.__scuWrap || (target.__scuWrap = wrap(target));
     }

@@ -1,3 +1,22 @@
 main{
     text-align: center;
 }
+
+.loader{
+    position: relative;
+}
+
+.mask{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.mask > span{
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    position: absolute;
+}

@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import ImageSelection from './ImageSelection';
 import Canvas from './Canvas';
 import Filters from './Filters';
+import LoaderMask from './LoaderMask';
 import store from '../store/main';
 import { IMAGE_CHANGE, FILTER_CHANGE } from '../store/constants';
 import './Application.css';
@@ -24,17 +25,20 @@ export default class Application extends Component {
     }
 
     onFilterChange(filter) {
-        store.dispatch({
-            type: FILTER_CHANGE,
-            data: filter,
-        });
+        filter !== store.getState().filter &&
+            store.dispatch({
+                type: FILTER_CHANGE,
+                data: filter,
+            });
     }
 
     render(props, state) {
         return (
             <main>
                 <ImageSelection onChange={this.onImageChange} />
-                <Canvas image={state.filteredImage} />
+                <LoaderMask loading={state.applyingFilter}>
+                    <Canvas image={state.filteredImage} />
+                </LoaderMask>
                 <Filters
                     filters={state.filters}
                     selected={state.filter}
