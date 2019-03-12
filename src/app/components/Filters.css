@@ -1,6 +1,7 @@
 .filters{
     overflow: auto;
     white-space: nowrap;
+    transform: translateZ(0);
 }
 
 .filters button{

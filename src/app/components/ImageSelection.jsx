@@ -34,7 +34,6 @@ function onImageLoad(callback) {
         const image = event.target;
         callback(image);
         URL.revokeObjectURL(image.src);
-        image.src = null;
     };
 }
 

@@ -38,11 +38,9 @@ export function rgb2hsl(r, g, b) {
         max === 0 || min === 1
             ? 0
             : (max - lightness) / Math.min(lightness, 1 - lightness);
-    let hue;
+    let hue = 0;
 
-    if (min == max) {
-        hue = 0;
-    } else {
+    if (min !== max) {
         const range = max - min;
         switch (max) {
             case R:

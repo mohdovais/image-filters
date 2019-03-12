@@ -12,17 +12,10 @@ export function createThumbnail(img) {
 
 export default function imageReducer(state, img) {
     const image = getImageData(img);
-    const thumbnail = createThumbnail(img);
 
     return Object.assign({}, state, {
         image,
-        thumbnail,
         filter: 'ORIGINAL',
-        filters: state.filters.map(filter =>
-            Object.assign({}, filter, {
-                thumbnail,
-            })
-        ),
         filteredImage: image,
     });
 }

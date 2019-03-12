@@ -33,6 +33,7 @@ export default class Application extends Component {
     }
 
     render(props, state) {
+        console.log(state);
         return (
             <main>
                 <ImageSelection onChange={this.onImageChange} />

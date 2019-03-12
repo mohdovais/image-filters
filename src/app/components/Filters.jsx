@@ -21,8 +21,6 @@ function Button(props) {
     );
 }
 
-const PureButton = pure(Button);
-
 function Filters(props) {
     return (
         <div class="filters">
@@ -38,6 +36,7 @@ function Filters(props) {
     );
 }
 
+const PureButton = pure(Button);
 const PureFilters = pure(Filters);
 
 export default pure(function(props) {
