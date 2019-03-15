@@ -47,4 +47,8 @@ export default [
         label: 'Lightness',
         fn: 'LIGHTNESS',
     },
+    {
+        label: 'Pixelate',
+        fn: 'PIXELATE',
+    },
 ];

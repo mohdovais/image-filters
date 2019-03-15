@@ -9,6 +9,7 @@ import {
 import saturation from './../filters/saturation';
 import lightness from './../filters/lightness';
 import changeHue from './../filters/hue';
+import pixelate from './../filters/pixelate';
 
 onmessage = function(event) {
     console.time('filter');
@@ -50,6 +51,9 @@ onmessage = function(event) {
             break;
         case 'LIGHTNESS':
             lightness(data, 0.2);
+            break;
+        case 'PIXELATE':
+            pixelate(eventData[0], 10);
             break;
     }
 
